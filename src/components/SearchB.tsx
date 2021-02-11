@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 
 interface Props {
-  search: (query: string) => void;
+  search: (search: string) => void;
 }
 
 interface State {
