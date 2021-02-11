@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { Container, Row, Col, Image} from "react-bootstrap";
 import { Result, SearchResults } from '../interfaces';
 import "../components/Home.css"
+import { FormControl } from 'react-bootstrap';
 
 interface HomeState{
     results:  Result[]
     loading: boolean
+    search:string
 }
 
 
@@ -15,6 +17,7 @@ export default class Home extends Component <{}, HomeState> {
 state={
     results: [] as Result[], 
     loading:true,
+    search:"",
 }
 
 async componentDidMount() {
@@ -44,8 +47,14 @@ this.setState({results:data, loading:false});
               {loading ? (
                 <h4>{loading}</h4>
               ) : (
+                 
                 <>
-                  {this.state.results.map((result, key) => (
+                 <Row>
+                      <FormControl placeholder="Search" value={this.state.results} onChange={(e) => this.setState({search: e.currentTarget.value})}/>
+                  </Row>
+                  {this.state.results
+                  .filter(result => result.title.indexOf(this.state.search) !== -1)
+                  .map((result, key) => (
                     <Container className="container-wrapper col-sm-1 ">
                       <Row className="albums-wrapper my-3 " key={key}>
                         <Col className="singleAlbum ">
